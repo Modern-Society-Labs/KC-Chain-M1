@@ -1,0 +1,45 @@
+# Exclude everything that is not needed in the runtime image
+
+# Git & CI
+.git
+.github/
+.gitignore
+
+# Documentation
+*.md
+docs/
+smartcity-test/docs/
+
+# Logs & data
+logs/
+*.log
+*.csv
+*.out
+*.db
+*.sqlite*
+
+# Tests & benchmarking artifacts
+**/tests/
+coverage/
+
+# Local environments & caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Node modules (if any)
+node_modules/
+
+# Rust target directory
+**/target/
+
+# Data sets (avoid copying huge CSVs)
+smartcity-test/data/* 

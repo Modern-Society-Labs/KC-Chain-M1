@@ -1,0 +1,30 @@
+[api]
+host = "127.0.0.1"
+port = 3000
+cors_origins = ["http://localhost:3000"]
+rate_limit_per_minute = 60
+
+[encryption]
+stage1_key_path = "stage1.key"
+stage2_key_path = "stage2.key"
+key_rotation_hours = 24
+
+[storage]
+database_url = "sqlite:lcore-mvp.db"
+max_connections = 10
+query_cache_ttl_minutes = 5
+
+[kc_chain]
+rpc_url = "https://rpc.devnet.alchemy.com/7eade438-d743-4dc5-ac64-3480de391200"
+ws_url = "https://ws.devnet.alchemy.com/7eade438-d743-4dc5-ac64-3480de391200"
+chain_id = 1205614515668104
+private_key = "0x5c1e13f56de66ba39fa5e41a40a8610081cf6df7c9903ef35b90a7e85dfca39d"
+
+[kc_chain.contracts]
+mvp_processor = "0xd99061c28b9063d9651fea67930fc4ff598ba5b2"
+device_registry = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" # Default local deployment
+
+[risc_zero]
+dev_mode = true
+bonsai_api_key = ""
+bonsai_api_url = "" 

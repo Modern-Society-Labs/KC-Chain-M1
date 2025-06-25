@@ -1,0 +1,18 @@
+[package]
+name = "kc_chain"
+version = "0.1.0"
+edition = "2021"
+# build script removed (handled via ABI file)
+publish = false
+
+[dependencies]
+anyhow = "1.0"
+ethers = { version = "2.0", features = ["abigen"] }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "1.0"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1.37"
+alloy-primitives = "0.8.20"
+hex = "0.4"
+
+# build-dependencies section no longer needed 

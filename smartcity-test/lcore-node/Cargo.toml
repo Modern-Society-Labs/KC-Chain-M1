@@ -1,0 +1,31 @@
+[workspace]
+members = [
+    "api",
+    "encryption",
+    "storage",
+    "device",
+    "kc_chain",
+]
+resolver = "2"
+
+[package]
+name = "lcore-node-mvp"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5.4", features = ["derive"] }
+tokio = { version = "1.37.0", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"]}
+config = { version = "0.14", features = ["toml"] }
+serde = { version = "1.0", features = ["derive"] }
+
+# Local dependencies
+api = { path = "./api" }
+encryption = { path = "./encryption" }
+storage = { path = "./storage" }
+device = { path = "./device" }
+kc_chain = { path = "./kc_chain" } 

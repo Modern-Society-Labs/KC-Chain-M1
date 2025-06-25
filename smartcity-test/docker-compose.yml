@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  lcore-node:
+    build:
+      context: .
+      dockerfile: Dockerfile.lcore
+    ports:
+      - "3000:3000"
+    environment:
+      - KC_CHAIN_RPC=${KC_CHAIN_RPC}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - CONTRACT_ADDRESS=${CONTRACT_ADDRESS}
+    volumes:
+      - ./data:/data
+  simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile.simulator
+    environment:
+      - LCORE_API_URL=http://lcore-node:3000
+  stress-test:
+    build:
+      context: ..  # build from root of repository
+      dockerfile: Dockerfile.stress
+    environment:
+      - RPC_HTTP_URL=${KC_CHAIN_RPC}
+      - CHAIN_ID=1205614515668104
+      - LCORE_NODE_URL=http://lcore-node:3000
+      - PRIVATE_KEY=${PRIVATE_KEY}
+    volumes:
+      - ../logs:/app/logs
+    depends_on:
+      - lcore-node

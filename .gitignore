@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+
+# Environment & secrets
+.env
+.env.*
+
+# Logs & runtime artifacts
+logs/
+*.log
+*.out
+*.csv
+*.db
+*.sqlite*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Docker
+*.dockerfile
+Dockerfile.*
+
+# Rust build artifacts
+**/target/
+Cargo.lock
+
+# Node (if any future JS tools)
+node_modules/
+
+# Data sets (keep small sample if needed)
+smartcity-test/data/*
+!smartcity-test/data/README.md
+
+# Misc
+*.swp
+*~ 
