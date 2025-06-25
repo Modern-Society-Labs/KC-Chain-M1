@@ -112,7 +112,7 @@ This will return the tuple `(bytes encryptedResult, bytes32 proofHash, uint256 t
 
 ## Future Upgrades
 
-- **Re-enable Rate Limiting**: Add middleware to prevent abuse of the API endpoints.
+- **Add Rate Limiting**: Implement middleware to prevent abuse of the API endpoints.
 - **Enhanced Encryption**: Integrate the dual-encryption process with a deterministic execution environment like the Cartesi VM.
 - **Real Proof Hashes**: Replace the placeholder proof hash with actual proofs from a system like RiscZero.
 - **Full Device SDK Integration**: Replace `curl` simulations with actual data streams from devices running the `lcore-device-sdk`. 

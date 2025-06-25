@@ -64,7 +64,7 @@ IOT_DEVICE_COUNT = int(os.getenv("IOT_DEVICE_COUNT", 15))
 IOT_REGISTRATION_RATE = float(os.getenv("IOT_REGISTRATION_RATE", 0.1))  # 1 registration per 10 seconds
 IOT_DATA_SUBMISSION_RATE = float(os.getenv("IOT_DATA_SUBMISSION_RATE", 0.2))  # 1 submission per 5 seconds
 
-# Performance targets (from METRICS.md)
+# Performance targets
 TARGET_DAILY_ENTRIES = int(os.getenv("TARGET_DAILY_ENTRIES", 500))
 TARGET_SUCCESS_RATE = float(os.getenv("TARGET_SUCCESS_RATE", 0.95))
 TARGET_MAX_LATENCY_SEC = float(os.getenv("TARGET_MAX_LATENCY_SEC", 30.0))

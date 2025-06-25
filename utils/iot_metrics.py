@@ -157,7 +157,7 @@ class IoTMetricsTracker:
         self.data_submission_count = 0
         self.on_chain_commitments = 0
         
-        # Performance targets from METRICS.md
+        # Performance targets
         self.target_daily_entries = 500
         self.target_success_rate = 0.95
         self.target_latency_sec = 30.0

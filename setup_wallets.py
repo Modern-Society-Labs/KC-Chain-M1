@@ -29,9 +29,9 @@ def main():
     funding_helper.print_funding_instructions(amount_per_wallet_eth=0.08)
     
     print("\n📁 Files created:")
-    print("  logs/wallets.csv - Wallet addresses, private keys, and metadata")
-    print("  logs/tx_metrics.csv - Transaction logs (already exists)")
-    print("  logs/iot_metrics.csv - IoT pipeline metrics (will be created)")
+    print("  wallets.csv - Wallet addresses, private keys, and metadata")
+    print("  logs/tx_metrics.csv - Transaction logs")
+    print("  logs/iot_metrics.csv - IoT pipeline metrics")
     
     print("\n🔄 Next steps:")
     print("1. Fund the main funder wallet with your 1 ETH")

@@ -47,7 +47,7 @@ class WalletManager:
         wallets_csv_file : str | None, optional
             Explicit path to the wallets CSV file. If *None* (the default), the
             manager will look for an environment variable ``WALLETS_CSV_FILE``.
-            When the variable is not set, it falls back to ``"logs/wallets.csv"``.
+            When the variable is not set, it falls back to ``"wallets.csv"``.
         """
 
         # Resolve the location of the wallets data file. This makes it possible
@@ -55,7 +55,7 @@ class WalletManager:
         # simply by exporting the environment variable, without having to change
         # any code.
         if wallets_csv_file is None:
-            wallets_csv_file = os.getenv("WALLETS_CSV_FILE", "logs/wallets.csv")
+            wallets_csv_file = os.getenv("WALLETS_CSV_FILE", "wallets.csv")
 
         self.wallets_csv_file = Path(wallets_csv_file)
         
@@ -63,7 +63,7 @@ class WalletManager:
         self.wallets_by_type: Dict[WalletType, List[ManagedWallet]] = {}
         
         # Ensure parent directory exists when using a *relative* path such as
-        # the default "logs/wallets.csv". When an absolute path is supplied
+        # the default "wallets.csv". When an absolute path is supplied
         # (e.g. "/assets/wallets.csv" inside a container), the directory is
         # expected to exist already and we skip creation to avoid permission
         # issues.

@@ -159,7 +159,7 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 |---|---|---|
 | Use legacy standalone `smartcity-test/simulator` | Integrated device simulator in Python stress-test | Single orchestrator, fewer moving parts |
 | Encrypt → proof generation inside Rust only | Proofs simulated with SHA256 checksums for Milestone 1 | Enables architecture validation before Cartesi migration in Milestone 2 |
-| Rate-limiting middleware enabled in Axum | Disabled for stress-test volume | Would block 200 req/min stress workload |
+| Rate-limiting middleware | Not implemented in MVP | Would be required for production deployment |
 | Store full datasets in Docker image | `.dockerignore` excludes them | Slim image, < 200 MB |
 
 ---
@@ -187,7 +187,7 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 * **[Cartesi Layer Migration](https://github.com/Modern-Society-Labs/lcore-node)**: Migrate local SQLite storage to Cartesi rollups-node
 * **Real RiscZero zkProofs**: Replace SHA256 checksums with cryptographic proofs within [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node)
 * **Deterministic Execution**: Complete [Cartesi rollups-node integration](https://github.com/Modern-Society-Labs/lcore-node) with fraud proofs
-* **On-chain event indexing & Grafana dashboards**: Enhanced monitoring and analytics
+* **On-chain event indexing & monitoring dashboards**: Enhanced monitoring and analytics
 
 ---
 

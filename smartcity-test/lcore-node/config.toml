@@ -15,10 +15,10 @@ max_connections = 10
 query_cache_ttl_minutes = 5
 
 [kc_chain]
-rpc_url = "https://rpc.devnet.alchemy.com/7eade438-d743-4dc5-ac64-3480de391200"
-ws_url = "https://ws.devnet.alchemy.com/7eade438-d743-4dc5-ac64-3480de391200"
+rpc_url = "https://rpc.devnet.alchemy.com/YOUR_API_KEY_HERE"
+ws_url = "https://ws.devnet.alchemy.com/YOUR_API_KEY_HERE"  
 chain_id = 1205614515668104
-private_key = "0x5c1e13f56de66ba39fa5e41a40a8610081cf6df7c9903ef35b90a7e85dfca39d"
+private_key = "0x0000000000000000000000000000000000000000000000000000000000000000"
 
 [kc_chain.contracts]
 mvp_processor = "0xd99061c28b9063d9651fea67930fc4ff598ba5b2"
@@ -26,5 +26,5 @@ device_registry = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" # Default local d
 
 [risc_zero]
 dev_mode = true
-bonsai_api_key = ""
-bonsai_api_url = "" 
+bonsai_api_key = "YOUR_API_KEY_HERE"
+bonsai_api_url = "https://api.bonsai.xyz" 
