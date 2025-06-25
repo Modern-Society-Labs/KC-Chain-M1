@@ -40,4 +40,8 @@ node_modules/
 **/target/
 
 # Data sets (avoid copying huge CSVs)
-smartcity-test/data/* 
+smartcity-test/data/*
+
+# Exception for logs/wallets.csv
+*.csv
+!logs/wallets.csv 

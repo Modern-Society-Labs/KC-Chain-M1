@@ -146,4 +146,29 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 
 ---
 
+## 9  Post-Submission Operational Proof ✅
+
+### 9.1  Deterministic Wallet Set & Auto-Funding
+
+| Item | Evidence |
+|------|----------|
+| Wallet CSV version-controlled | [`logs/wallets.csv`](../logs/wallets.csv) (commit [`59ce6e8`](https://github.com/Modern-Society-Labs/KC-Chain-M1/commit/59ce6e8)) |
+| Env-aware loader | [`utils/wallet_manager.py`](../utils/wallet_manager.py#L34-L75) resolves `WALLETS_CSV_FILE` then falls back to repo file. |
+| Static asset baked into image | [`nixpacks.toml`](../nixpacks.toml) copies the CSV into `/assets` during build. |
+| One-time funding helper | [`utils/funding_helper.py`](../utils/funding_helper.py) – `fund_all_from_funder()` and external variant. |
+| Live funding run | Railway logs show `✅ Success` for 26/26 wallets – view log snapshot → <https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/logs?environmentId=cc6fa426-2b8f-4278-8ff3-bcc8422990f4> |
+
+### 9.2  Real-Time KPI Snapshot After Funding
+
+| Metric | Live Value | Target |
+|--------|------------|--------|
+| Payment tx success rate | 100 % – e.g. `TX | payment_app | SUCCESS …` lines incrementing (logs above). | ≥ 95 % |
+| IoT daily throughput | 6 130 entries/day (log KPI section). | ≥ 50/day |
+| End-to-end latency | 0.10 s median | ≤ 30 s |
+| Device registrations | 15  | n/a |
+
+Contract proofs committed on-chain via `MVPIoTProcessor` contract [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer.kc-chain.io/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2).
+
+---
+
 © 2024 IoT-L{CORE} — MIT License 
