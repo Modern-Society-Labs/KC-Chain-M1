@@ -28,17 +28,36 @@ This project is designed to run **24/7** on [Railway](https://railway.app/) whil
 
 ---
 
-## 🎯 Milestone 1 — Objectives & KPIs
+## 🎯 **KC-Chain-M1: Milestone 1 Summary**
 
-| Objective | Requirement | Where to Observe |
-|-----------|-------------|------------------|
-| zkProof validation | Validate ≥ **3** test datasets using zkProofs | `smartcity-test/docs/mvp-testing.md` + `/metrics` (commit counts) |
-| Cartesi Rollups commitments | Functional proof submission via `lcore-node` | `/metrics` → `on_chain_commitments` counter |
-| IoT data throughput | ≥ **50** data entries / day | `/metrics` → `daily_submission_rate` |
+| **Deliverable** | **Target** | **Evidence** |
+|-----------------|------------|--------------|
+| Dual encryption pipeline | Encrypt ≥ **100** IoT data payloads | `/smartcity-test/lcore-node/` working MVP |
+| KC-Chain devnet integration | Deploy + commit ≥ **10** transactions | KC-Chain Explorer: [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer-1205614515668104.devnet.alchemy.com/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2) |
+| zkProof validation (simulated) | Validate ≥ **3** test datasets using zkProofs | `smartcity-test/lcore-node/README.md` + `/metrics` (commit counts) |
+| Stress-test automation | Orchestrate ≥ **200** multi-contract transactions/day | Live: [Railway deployment](https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4) + `/metrics` endpoint |
+| Multi-use-case validation | Test ≥ **3** blockchain verticals (Payments, Lending, Merchant) | `contracts/` folder contains implementations |
 
-The `/metrics` endpoint returns real-time booleans `meets_success_target`, `meets_latency_target`, `meets_volume_target` so evaluators know instantly if targets are hit.
+## 📋 **Phase 1 (MVP - Milestone 1) vs Phase 2 (Cartesi - Milestone 2) Implementation**
+
+### **Current Phase 1 - MVP Implementation (Milestone 1):**
+- ✅ **Dual Encryption Pipeline**: AES-256-GCM + ChaCha20-Poly1305 working
+- ✅ **KC-Chain Integration**: On-chain commitments via Stylus contracts
+- ✅ **Local SQLite Storage**: Database at `/tmp/lcore-mvp.db` with device/data tables¹
+- ✅ **Data Integrity**: SHA256 checksums for encrypted payload verification
+- 🔄 **zkProofs (Simulated)**: Currently using SHA256 hashes as placeholder proof_hash¹
+
+### **Upcoming Phase 2 - Cartesi Integration (Milestone 2):**
+- 🚀 **Full zkProof Implementation**: RiscZero proofs within Cartesi VM
+- 🚀 **Deterministic Execution**: Cartesi rollups-node integration
+- 🚀 **Fraud Proof System**: Complete dispute resolution mechanism
+- 🚀 **VM-Isolated Storage**: SQLite operations migrated to Cartesi machine¹
+
+**Note**: The current MVP uses simulated proofs (SHA256 checksums) to validate the architecture. Full cryptographic zkProofs will be implemented in Phase 2 within the Cartesi deterministic execution environment.
 
 ---
+
+¹ *These functions will be migrated to the Cartesi Layer in Milestone 2*
 
 ## 🔧 Quick Start (Local)
 
@@ -75,10 +94,17 @@ Visit `http://localhost:8000/metrics` to verify KPIs.
 
 ## 🏗️ Architecture Integration
 
-### Data Flow Pipeline
+### Data Flow Pipeline (Milestone 1)
 ```
-CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → Dual Encryption → Stylus Contract (0xd99061c28b9063d9651fea67930fc4ff598ba5b2)
+CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → Dual Encryption → Local SQLite (/tmp/lcore-mvp.db)¹ → Stylus Contract (0xd99061c28b9063d9651fea67930fc4ff598ba5b2)
 ```
+
+### Future Data Flow Pipeline (Milestone 2)
+```
+CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → Dual Encryption → Cartesi Rollups → RiscZero zkProofs → Stylus Contract
+```
+
+¹ *Will be migrated to Cartesi Layer in Milestone 2*
 
 ### Performance Targets
 - **Volume**: 500 IoT entries per day simulation

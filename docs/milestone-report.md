@@ -22,10 +22,10 @@ KC-Chain devnet explorer: https://explorer-1205614515668104.devnet.alchemy.com/
 |---|---|---|
 | A1 | Define project milestones, roadmap & KPI rubric | Roadmap table §2 |
 | A2 | Spin-up devnet & cloud infra | KC-Chain Orbit devnet, Railway 24×7 container |
-| A3 | Implement high-level architecture (Cartesi encryption layer + dual-encryption + zkProofs stub) | Architecture diagram §3 |
+| A3 | Implement high-level architecture (local SQLite + dual-encryption + zkProofs simulation) | Architecture diagram §3 |
 | A4 | Collect use-case input from stakeholders | Three validated verticals §4 |
 | A5 | Develop stress-test simulator & IoT pipeline | Integrated into `main.py`; live KPIs reachable |
-| A6 | Run test dataset validations with zkProof stubs | 3 sample datasets validated, hashes published §5.1 |
+| A6 | Run test dataset validations with zkProof simulation | Data integrity validation using SHA256 checksums §5.1 |
 
 ---
 
@@ -62,19 +62,28 @@ flowchart TD
         C[Loan Origination] --> LOGS
         D[IoT Device Sim]
         D -- REST --> E[lcore-node MVP]
-        E -- dual encryption --> CRT[Cartesi Encryption Layer]
+        E -- dual encryption --> SQLITE[Local SQLite Database]
         E -- on-chain tx --> CHAIN{{MVPIoTProcessor}}
     end
-    CRT -- proof hash --> CHAIN
+    SQLITE -- data integrity --> CHAIN
     LOGS -.-> METRICS[/metrics]
 ```
 
-**Components:**
-1. **Cartesi Encryption Layer** – handles encrypted payloads & proof generation; state verified via Rollups.
-2. **FHE / zkProofs** – RiscZero stubs run over three public datasets (see §5.1); full FHE planned in Phase-4.
+**Milestone 1 Components:**
+1. **Local SQLite Database** – handles encrypted payloads & local data persistence (`/tmp/lcore-mvp.db`)¹
+2. **zkProofs (Phase 1 - Simulated)** – SHA256 checksums simulate proof functionality; full RiscZero zkProofs planned for Milestone 2¹
 3. **Stylus Contract** – address `MVP_IOT_PROCESSOR_ADDRESS` (env-driven).
 
+**Milestone 2 Migration Plan:**
+1. **Cartesi Encryption Layer** – will handle encrypted payloads & proof generation; state verified via Rollups
+2. **Full RiscZero zkProofs** – cryptographic proof generation within Cartesi VM
+3. **Deterministic Storage** – SQLite operations moved to Cartesi machine
+
+
+
 ---
+
+¹ *These functions will be migrated to the Cartesi Layer in Milestone 2*
 
 ## 4  Target Use-Cases ✅
 
@@ -88,17 +97,37 @@ flowchart TD
 
 ## 5  Deliverables & KPI Verification ✅
 
-### 5.1  zkProof Dataset Validations
+### 5.1  zkProof Dataset Validations (Phase 1 - Simulated)
 
-| Dataset | SHA-256 of source CSV | Proof CID |
+**Current Implementation Status:**
+- 🔄 **Phase 1 (MVP)**: zkProofs are **simulated** using SHA256 checksums to ensure Stylus' capabilities to handle the influx of data.
+- 🚀 **Phase 2 (Cartesi)**: Full RiscZero zkProof implementation planned
+
+**Phase 1 Simulation Approach:**
+```rust
+// Current MVP implementation (smartcity-test/lcore-node/api/src/handlers/device_handler.rs)
+let proof_hash: B256 = B256::from_slice(&Sha256::digest(&encrypted_data.0));
+```
+
+**What This Achieves:**
+- ✅ Data integrity verification via SHA256 checksums
+- ✅ On-chain commitment of encrypted data with integrity proof
+- ✅ Architecture validation for future zkProof integration
+- ✅ End-to-end pipeline testing with placeholder proofs
+
+**Phase 2 Migration Plan:**
+- 🚀 Replace SHA256 checksums with RiscZero zkProofs
+- 🚀 Implement zkProof generation within Cartesi VM
+- 🚀 Add cryptographic proof verification on-chain
+- 🚀 Enable fraud-proof dispute resolution
+
+| Dataset | SHA-256 Checksum | Phase 2 Target |
 |---|---|---|
-| EV_Predictive_Maintenance_Dataset_15min.csv | `c4fa…9e2` | `ipfs://bafyEV…` |
-| Greenhouse Plant Growth Metrics.csv | `7ad1…ab0` | `ipfs://bafyGH…` |
-| sales_data_sample.csv | `31d4…c3a` | `ipfs://bafySA…` |
+| IoT device data | `✅ Implemented` | `🚀 RiscZero zkProof` |
+| Encrypted payloads | `✅ Implemented` | `🚀 Cartesi VM proof` |
+| Query results | `✅ Implemented` | `🚀 Deterministic execution proof` |
 
-*Proof artifacts generated with RiscZero guest program `zk_csv_hash`; verifier output included in `docs/proofs/`.*
-
-### 5.2  Cartesi Rollups Input Box on Testnet
+### 5.2  Local SQLite Database Integration (Milestone 1)
 
 Execute via `curl` (requires env vars in `.env`):
 
@@ -106,7 +135,9 @@ Execute via `curl` (requires env vars in `.env`):
 curl $LCORE_NODE_URL/device/register -d '{"device_id":"demo_001"}' -H 'Content-Type: application/json'
 ```
 
-Response `{"success":true}` confirms payload enqueued to the Rollups input box and persisted by the Cartesi off-chain storage layer.
+Response `{"success":true}` confirms payload processed through dual encryption and persisted in local SQLite database (`/tmp/lcore-mvp.db`).
+
+**Milestone 2 Migration**: This local storage will be migrated to Cartesi Rollups input box and off-chain storage layer.
 
 ### 5.3  IoT Throughput ≥ 50 entries / day
 
@@ -125,7 +156,7 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 | Originally Planned | Final Implementation | Reason |
 |---|---|---|
 | Use legacy standalone `smartcity-test/simulator` | Integrated device simulator in Python stress-test | Single orchestrator, fewer moving parts |
-| Encrypt → proof generation inside Rust only | Proofs moved to RiscZero guest for determinism | Easier future Cartesi migration |
+| Encrypt → proof generation inside Rust only | Proofs simulated with SHA256 checksums for Milestone 1 | Enables architecture validation before Cartesi migration in Milestone 2 |
 | Rate-limiting middleware enabled in Axum | Disabled for stress-test volume | Would block 200 req/min stress workload |
 | Store full datasets in Docker image | `.dockerignore` excludes them | Slim image, < 200 MB |
 
@@ -150,10 +181,11 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 
 ---
 
-## 8  Next Milestone Preview 🛣️
-* Cartesi VM deterministic port
-* Real RiscZero proofs embedded in pipeline
-* On-chain event indexing & Grafana dashboards
+## 8  Next Milestone Preview (Milestone 2) 🛣️
+* **Cartesi Layer Migration**: Migrate local SQLite storage to Cartesi rollups-node
+* **Real RiscZero zkProofs**: Replace SHA256 checksums with cryptographic proofs within Cartesi VM
+* **Deterministic Execution**: Complete Cartesi rollups-node integration with fraud proofs
+* **On-chain event indexing & Grafana dashboards**: Enhanced monitoring and analytics
 
 ---
 

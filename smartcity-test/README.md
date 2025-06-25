@@ -4,14 +4,19 @@ This MVP memory bank documents the **first implementation step** in our path to 
 
 ## 🎯 Implementation Strategy: Phase 1 Complete
 
-### **Phase 1: MVP Implementation (Status: ✅ Complete)**
+### **Phase 1: MVP Implementation (Status: ✅ Complete - Milestone 1)**
 - **Standalone Dual Encryption**: The `encryption` crate successfully implements a two-stage AES-256-GCM and ChaCha20-Poly1305 pipeline.
-- **Direct SQLite Storage**: The `storage` crate provides a working SQLite backend for local, encrypted data persistence.
+- **Local SQLite Storage**: The `storage` crate provides a working SQLite backend for local, encrypted data persistence (`/tmp/lcore-mvp.db`)¹.
 - **REST APIs**: The `api` crate exposes `/device/register` and `/device/data` endpoints using the Axum framework.
 - **KC-Chain Integration**: The `kc_chain` crate successfully submits transactions to the `MVPIoTProcessor` Stylus contract on the live KC-Chain devnet.
 
-### **Phase 2: Cartesi Migration (Next)**
-With the MVP validated, the project is now ready to proceed with migration to the full Cartesi rollups-node architecture.
+### **Phase 2: Cartesi Migration (Milestone 2 - Next)**
+With the MVP validated, the project is now ready to proceed with migration to the full Cartesi rollups-node architecture, including:
+- **Cartesi VM Integration**: Migrate SQLite operations to deterministic Cartesi environment¹
+- **RiscZero zkProofs**: Replace SHA256 simulation with cryptographic proof generation¹  
+- **Fraud Proof System**: Complete dispute resolution mechanism
+
+¹ *These functions will be migrated to the Cartesi Layer in Milestone 2*
 
 ## ✅ MVP Architecture Components
 

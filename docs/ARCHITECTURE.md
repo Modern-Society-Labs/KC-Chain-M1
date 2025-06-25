@@ -4,7 +4,7 @@ This file is updated as components evolve.  For the snapshot of Milestone-1, see
 
 ---
 
-## Top-Level Diagram
+## Top-Level Diagram (Milestone 1 - Current)
 
 ```mermaid
 flowchart LR
@@ -20,12 +20,33 @@ flowchart LR
 
     subgraph Rust Container (lcore-node)
         API[Axum API] --> ENC(Dual Encryption)
-        ENC --> CRT[Cartesi Encryption Layer]
+        ENC --> SQLITE[Local SQLite Database]¹
         API --> KC[KC-Chain Client]
     end
 
     KC -->|Stylus tx| CHAIN[(MVPIoTProcessor)]
 ```
+
+## Future Architecture (Milestone 2 - Cartesi Integration)
+
+```mermaid
+flowchart LR
+    subgraph Python Container
+        MP[main.py Orchestrator]
+        MP --> DP[data_pipeline]
+        DP --> LC(Lcore Client)
+    end
+
+    subgraph Rust Container (lcore-node)
+        API[Axum API] --> ENC(Dual Encryption)
+        ENC --> CRT[Cartesi Encryption Layer]¹
+        API --> KC[KC-Chain Client]
+    end
+
+    KC -->|Stylus tx| CHAIN[(MVPIoTProcessor)]
+```
+
+¹ *Will be migrated to Cartesi Layer in Milestone 2*
 
 ---
 
@@ -41,12 +62,17 @@ flowchart LR
 
 ---
 
-## Data Flow
+## Data Flow (Milestone 1 - Current)
 1. `device_simulator` synthesises sensor JSON.
 2. `lcore_client` POSTs to `lcore-node` (`/device/data`).
-3. Rust node encrypts ➜ stores ➜ submits Stylus tx.
-4. Rust node encrypts ➜ forwards payload to Cartesi Rollups ➜ submits Stylus tx.
-5. Python updates KPI counters and writes CSV logs.
+3. Rust node encrypts ➜ stores in local SQLite (`/tmp/lcore-mvp.db`) ➜ submits Stylus tx.
+4. Python updates KPI counters and writes CSV logs.
+
+## Future Data Flow (Milestone 2 - Cartesi)
+1. `device_simulator` synthesises sensor JSON.
+2. `lcore_client` POSTs to `lcore-node` (`/device/data`).
+3. Rust node encrypts ➜ forwards payload to Cartesi Rollups ➜ generates RiscZero proofs ➜ submits Stylus tx.
+4. Python updates KPI counters and writes CSV logs.
 
 ---
 
@@ -59,21 +85,28 @@ flowchart LR
 | `contracts/data_pipeline.py` | `submit_iot_sensor_data()` | IoT flow |
 | `utils/device_simulator.py` | class `DeviceSimulator` | sensor payloads |
 
-### Rust Crates (lcore-node)
+### Rust Crates (lcore-node) - Milestone 1
 | Crate | Purpose |
 |-------|---------|
 | `api` | Axum routes & validation |
 | `encryption` | AES-GCM + ChaCha20 libs |
-| `storage` | DEPRECATED – replaced by Cartesi Rollups |
-| `rollups_storage` | Cartesi Rollups off-chain data persistence |
-| `cartesi_rollups` | Off-chain input box integration |
+| `storage` | Local SQLite database operations |
 | `kc_chain` | ethers-rs client |
 | `device` | domain types & manager |
 
+### Future Rust Crates - Milestone 2
+| Crate | Purpose |
+|-------|---------|
+| `rollups_storage` | Cartesi Rollups off-chain data persistence |
+| `cartesi_rollups` | Off-chain input box integration |
+| `risc_zero` | zkProof generation within Cartesi VM |
+
 ---
 
-## Future Evolution
-* Replace SQLite with Cartesi Rollups input box.  
-* Move encryption + proof into RiscZero guest inside Cartesi VM.  
-* Split payment / merchant / lending apps into separate containers for micro-benchmarking.
-* Cartesi Rollups input box currently integrated for encrypted payload storage. 
+## Migration Roadmap to Milestone 2
+* Replace local SQLite with Cartesi Rollups input box
+* Move encryption + proof generation into RiscZero guest inside Cartesi VM  
+* Split payment / merchant / lending apps into separate containers for micro-benchmarking
+* Implement fraud-proof dispute resolution system
+
+ 
