@@ -13,10 +13,8 @@ dist/
 .env.*
 
 # Logs & runtime artifacts
-logs/
 *.log
 *.out
-*.csv
 *.db
 *.sqlite*
 
@@ -45,4 +43,7 @@ smartcity-test/data/*
 
 # Misc
 *.swp
-*~ 
+*~
+
+# New exception for logs/wallets.csv
+!logs/wallets.csv  # keep the fixed wallet set under version control 

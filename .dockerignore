@@ -11,9 +11,7 @@ docs/
 smartcity-test/docs/
 
 # Logs & data
-logs/
 *.log
-*.csv
 *.out
 *.db
 *.sqlite*
