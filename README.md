@@ -236,5 +236,3 @@ The simulator uses pre-funded devnet wallets. Private keys are **never** publish
 | auto_user_16 | 0xA675af321014d6DC51C6f52A487D11ff1F83bDbA | Payment user |
 | auto_user_17 | 0xD7504A63795F7d193BcF0Db31201cDaAb240adDd | Payment user |
 | auto_user_18 | 0x6ef74Fc1dbfd351096E2A080e1d1619258C98953 | Payment user |
-
-The CSV at `logs/wallets.csv`

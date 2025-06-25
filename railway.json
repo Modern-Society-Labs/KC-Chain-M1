@@ -1,0 +1,14 @@
+{
+  "build": {
+    "builder": "dockerfile"
+  },
+  "deploy": {
+    "command": "python main.py"
+  },
+  "services": [
+    {
+      "name": "stress-test",
+      "port": 8000
+    }
+  ]
+} 
