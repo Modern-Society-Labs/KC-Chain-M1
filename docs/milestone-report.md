@@ -2,7 +2,7 @@
 
 > **Repository Tag:** `milestone-1`
 > 
-> **Live Demo:** <https://YOUR-RAILWAY-URL>
+> **Live Demo:** : <https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/logs?environmentId=cc6fa426-2b8f-4278-8ff3-bcc8422990f4>
 >    • `/health` → 200 OK   • `/metrics` → JSON KPI snapshot
 
 ---
@@ -102,7 +102,7 @@ Response `{"success":true}` proves INSERT; database is mounted in the container 
 *Live KPI:*
 
 ```bash
-curl https://YOUR-RAILWAY-URL/metrics | jq '.daily_submission_rate'
+curl https://https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/logs?environmentId=cc6fa426-2b8f-4278-8ff3-bcc8422990f4/metrics | jq '.daily_submission_rate'
 ```
 
 The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by ×8.6.
