@@ -5,6 +5,15 @@
 > **Live Demo:** : <https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/logs?environmentId=cc6fa426-2b8f-4278-8ff3-bcc8422990f4>
 >    • `/health` → 200 OK   • `/metrics` → JSON KPI snapshot
 
+## 🌐 Live Deployment & Explorer Links
+
+KC-Chain devnet explorer: https://explorer-1205614515668104.devnet.alchemy.com/
+
+| Purpose | Address / URL |
+|---------|---------------|
+| Stylus contract `MVPIoTProcessor` | 0xd99061c28b9063d9651fea67930fc4ff598ba5b2 |
+| Stress-test metrics endpoint | https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/service/1b58bdbe-f60a-4c59-be52-4cccb2044761/metrics |
+
 ---
 
 ## 1  Activities Completed
@@ -26,17 +35,19 @@
 gantt
     dateFormat  YYYY-MM-DD
     section Phase 0 – Prep
-    Repository Scaffold     :done, p0a, 2024-05-01, 3d
+    Repository Scaffold     :done, p0a, 2025-06-01, 3d
     section Phase 1 – MVP Dual Encryption
-    Rust crates            :done, p1a, 2024-05-04, 6d
+    Rust crates            :done, p1a, 2025-06-04, 6d
     Stylus Contract        :done, p1b, after p1a, 4d
     Local E2E Test         :done, p1c, after p1b, 2d
     section Phase 2 – Stress-Test Simulator
-    Python orchestrator    :done, p2a, 2024-05-16, 7d
+    Python orchestrator    :done, p2a, 2025-06-16, 7d
     IoT Data Pipeline      :done, p2b, after p2a, 5d
     section Phase 3 – Milestone Submission
-    Railway Deployment     :done, p3a, 2024-05-28, 2d
+    Railway Deployment     :done, p3a, 2025-06-28, 2d
     Grant Docs & Report    :active, p3b, after p3a, 2d
+    section Phase 4 – Extension
+    Phase-4 tasks          :p4a, 2025-07-15, 60d
 ```
 
 ---
