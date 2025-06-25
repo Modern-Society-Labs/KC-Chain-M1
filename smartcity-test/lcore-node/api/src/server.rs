@@ -8,6 +8,7 @@ use std::sync::Arc;
 use std::time::Duration;
 use tower_http::{cors::CorsLayer, trace::TraceLayer};
 use tracing::info;
+use std::net::{IpAddr, Ipv6Addr};
 
 use crate::{
     config::ApiConfig,
@@ -59,7 +60,8 @@ impl Server {
             .layer(cors)
             .with_state(Arc::new(self.create_app_state()));
 
-        let addr = SocketAddr::from(([0, 0, 0, 0], self.config.port));
+        // Bind to IPv6 unspecified address so the service is reachable via IPv6 and IPv4
+        let addr = SocketAddr::new(IpAddr::V6(Ipv6Addr::UNSPECIFIED), self.config.port);
         info!("API server listening on {}", addr);
 
         let listener = tokio::net::TcpListener::bind(addr).await?;
