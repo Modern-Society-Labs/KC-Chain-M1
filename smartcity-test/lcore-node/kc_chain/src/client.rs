@@ -49,7 +49,10 @@ impl Client {
         let wallet: LocalWallet = config
             .private_key
             .parse::<LocalWallet>()
-            .map_err(|e| KCChainError::Initialization(format!("{e}")))?
+            .map_err(|e| KCChainError::Initialization(format!(
+                "failed to parse kc_chain.private_key – {e}. Check that the env-var \
+LCORE_KC_CHAIN__PRIVATE_KEY is set and contains a valid 64-hex-char key."
+            )))?
             .with_chain_id(config.chain_id);
 
         let signer = Arc::new(SignerMiddleware::new(provider, wallet));
