@@ -10,7 +10,7 @@ stage2_key_path = "stage2.key"
 key_rotation_hours = 24
 
 [storage]
-database_url = "sqlite:lcore-mvp.db"
+database_url = "sqlite:/tmp/lcore-mvp.db"
 max_connections = 10
 query_cache_ttl_minutes = 5
 
