@@ -35,7 +35,7 @@ impl Connection {
             Err(sqlx::Error::Database(db_err)) => {
                 // Ignore duplicate primary key errors (already registered)
                 if db_err.message().contains("UNIQUE constraint failed") {
-                    Ok(())
+        Ok(())
                 } else {
                     Err(sqlx::Error::Database(db_err).into())
                 }
@@ -57,7 +57,7 @@ impl Connection {
             Err(sqlx::Error::Database(db_err)) => {
                 if db_err.message().contains("FOREIGN KEY constraint failed") {
                     // Device not yet in devices table; treat as non-fatal for MVP
-                    Ok(())
+        Ok(())
                 } else {
                     Err(sqlx::Error::Database(db_err).into())
                 }

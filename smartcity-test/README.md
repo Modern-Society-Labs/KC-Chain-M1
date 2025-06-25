@@ -1,5 +1,3 @@
-# MVP Memory Bank - Implementation Complete
-
 ## Overview
 
 This MVP memory bank documents the **first implementation step** in our path to the full Cartesi integration architecture. The MVP has been successfully built, tested, and validated, proving the core dual-encryption and on-chain commitment pipeline.
