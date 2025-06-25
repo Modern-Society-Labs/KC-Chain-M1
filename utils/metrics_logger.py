@@ -74,6 +74,12 @@ def log_metric(module: str, tx_hash: str, status: str, gas_used: int, latency_se
     if status == "success":
         _agg[module] += 1
 
-    logger.info(
-        f"TX | {module} | {status.upper()} | latency {latency_sec:.2f}s | gas {gas_used} | total successes { _agg[module] }"
-    ) 
+    # Use appropriate log level based on status to prevent Railway log confusion
+    log_message = f"TX | {module} | {status.upper()} | latency {latency_sec:.2f}s | gas {gas_used} | total successes {_agg[module]}"
+    
+    if status == "error":
+        logger.error(log_message)
+    elif status == "failed":
+        logger.warning(log_message)
+    else:
+        logger.info(log_message) 
