@@ -73,12 +73,6 @@ Visit `http://localhost:8000/metrics` to verify KPIs.
 
 ---
 
-## 🔒 Security & Privacy
-
-* **No secrets in repo** – `.env` is ignored; all keys are placeholders.
-* **Logs excluded** – runtime CSVs are ignored via `.gitignore`.
-* **Binary DBs removed** – large `*.db` artefacts are no longer tracked.
-
 ## 🏗️ Architecture Integration
 
 ### Data Flow Pipeline
@@ -131,7 +125,7 @@ TARGET_MAX_LATENCY_SEC=30.0
 
 ## Running the Enhanced Simulator
 
-### Option 1: Full Integration (Recommended)
+### Option 1: Full Integration
 Ensure lcore-node MVP is running, then:
 
 ```bash
@@ -159,7 +153,7 @@ The simulator provides real-time performance metrics:
 
 ```
 ============================================================
-IoT PIPELINE PERFORMANCE METRICS
+IoT PIPELINE PERFORMANCE METRICS EXAMPLE
 ============================================================
 Runtime: 0.25 hours
 Total Operations: 45
@@ -202,37 +196,3 @@ KC-Chain devnet explorer: <https://explorer-1205614515668104.devnet.alchemy.com/
 |---------|---------------|
 | Stylus contract `MVPIoTProcessor` | [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer-1205614515668104.devnet.alchemy.com/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2) |
 | Stress-test metrics endpoint | `https://<your-railway-url>/metrics` |
-
-
-## 🪪 Simulated Wallets
-
-The simulator uses pre-funded devnet wallets. Private keys are **never** published; only public addresses are listed here.
-
-| Label | Address | Role in simulator |
-|-------|---------|-------------------|
-| main_funder | 0xEd14eDC72F6DA4f2a68b339d6B3526534c9C5c59 | Provides ETH to all other wallets at start-up |
-| user_alice | 0xE26E30d3dd83627e4ADf96C87c5Fc1A290f03bed | Sends payment txs in `payment_app` |
-| user_bob | 0x6A590348500A4d423bd2660b44C94458447e4D92 | Sends payment txs |
-| user_charlie | 0x4C403a9e4BA771816022D2D44FAb3D39EEe71d6E | Sends payment txs |
-| merchant_store_a | 0xf0e75a1Ef0B79DFc3d33A7062646E72D92d70e48 | Receives settlements in `merchant_app` |
-| merchant_store_b | 0x6263DBE3D26a28fE0C11Fb88761Fc5Ac33Bf1d58 | Receives settlements |
-| lending_protocol | 0x864BBd89AB4814912A63167a91DA633BCe356729 | Originates loans in `lending_app` |
-| borrower_alice | 0x0Bb6ec0ed8ABebdce4D5383Be8Bfa0a06D6Ef341 | Makes loan repayments |
-| iot_device_pool | 0x8a03c782E3c7F58955BC42c3C8FfdBF0a8dB3008 | Default on-chain identity for device submissions |
-| iot_operator_a | 0xe2adB5B52043576f2C1d382020bcda2899686F72 | Registers devices & monitors pipeline |
-| iot_operator_b | 0x4a303984Bf3a0829261391bb4c9a243F1Dfd7087 | Registers devices |
-| auto_user_4 | 0xB813b503600C97952E10fd6f238f3b53B1B23E8F | Payment user |
-| auto_user_5 | 0x56729034cDdeed42FC7FdE953d737735753e6E1e | Payment user |
-| auto_user_6 | 0x54BaBa905DBfA2e3Acd4dd4e47799FA4f9fB89DB | Payment user |
-| auto_user_7 | 0x68E7C4CB5E7d6Ee250Ad1b7812d0D56186861863 | Payment user |
-| auto_user_8 | 0xEB985bf239baC1658E119f5E41bF704dcE35da94 | Payment user |
-| auto_user_9 | 0x084E38a97430edACFA4CBd9305a1a13924A6665c | Payment user |
-| auto_user_10 | 0xAEee257cbF616a620C839665298eb09F62E77f9B | Payment user |
-| auto_user_11 | 0x0606e69Ea93515a05d0BB65Dc6208b4E8095A014 | Payment user |
-| auto_user_12 | 0x8505714BdAAdd02b22746f9772aa0CE8DD9922DD | Payment user |
-| auto_user_13 | 0xee3Aad90dDF580649b7938e8aCcE93Eb7414FB5A | Payment user |
-| auto_user_14 | 0x5BABD6232D1E44eF60d602bde384232241e612E6 | Payment user |
-| auto_user_15 | 0xd81509af6F29B1A2CE7C2367807E89DB823eA3Cc | Payment user |
-| auto_user_16 | 0xA675af321014d6DC51C6f52A487D11ff1F83bDbA | Payment user |
-| auto_user_17 | 0xD7504A63795F7d193BcF0Db31201cDaAb240adDd | Payment user |
-| auto_user_18 | 0x6ef74Fc1dbfd351096E2A080e1d1619258C98953 | Payment user |
