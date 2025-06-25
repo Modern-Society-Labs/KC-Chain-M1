@@ -33,7 +33,7 @@ This project is designed to run **24/7** on [Railway](https://railway.app/) whil
 | Objective | Requirement | Where to Observe |
 |-----------|-------------|------------------|
 | zkProof validation | Validate ≥ **3** test datasets using zkProofs | `smartcity-test/docs/mvp-testing.md` + `/metrics` (commit counts) |
-| SQLite R/W on testnet | Functional read **and** write via `lcore-node` | `/metrics` → `on_chain_commitments` counter |
+| Cartesi Rollups commitments | Functional proof submission via `lcore-node` | `/metrics` → `on_chain_commitments` counter |
 | IoT data throughput | ≥ **50** data entries / day | `/metrics` → `daily_submission_rate` |
 
 The `/metrics` endpoint returns real-time booleans `meets_success_target`, `meets_latency_target`, `meets_volume_target` so evaluators know instantly if targets are hit.

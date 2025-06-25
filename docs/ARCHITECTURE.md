@@ -20,7 +20,7 @@ flowchart LR
 
     subgraph Rust Container (lcore-node)
         API[Axum API] --> ENC(Dual Encryption)
-        ENC --> DB[(SQLite)]
+        ENC --> CRT[Cartesi Encryption Layer]
         API --> KC[KC-Chain Client]
     end
 
@@ -45,7 +45,8 @@ flowchart LR
 1. `device_simulator` synthesises sensor JSON.
 2. `lcore_client` POSTs to `lcore-node` (`/device/data`).
 3. Rust node encrypts ➜ stores ➜ submits Stylus tx.
-4. Python updates KPI counters and writes CSV logs.
+4. Rust node encrypts ➜ forwards payload to Cartesi Rollups ➜ submits Stylus tx.
+5. Python updates KPI counters and writes CSV logs.
 
 ---
 
@@ -63,7 +64,9 @@ flowchart LR
 |-------|---------|
 | `api` | Axum routes & validation |
 | `encryption` | AES-GCM + ChaCha20 libs |
-| `storage` | Diesel ORM / SQLite |
+| `storage` | DEPRECATED – replaced by Cartesi Rollups |
+| `rollups_storage` | Cartesi Rollups off-chain data persistence |
+| `cartesi_rollups` | Off-chain input box integration |
 | `kc_chain` | ethers-rs client |
 | `device` | domain types & manager |
 
@@ -72,4 +75,5 @@ flowchart LR
 ## Future Evolution
 * Replace SQLite with Cartesi Rollups input box.  
 * Move encryption + proof into RiscZero guest inside Cartesi VM.  
-* Split payment / merchant / lending apps into separate containers for micro-benchmarking. 
+* Split payment / merchant / lending apps into separate containers for micro-benchmarking.
+* Cartesi Rollups input box currently integrated for encrypted payload storage. 

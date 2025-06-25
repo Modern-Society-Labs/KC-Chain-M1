@@ -13,7 +13,7 @@
 |---|---|---|
 | A1 | Define project milestones, roadmap & KPI rubric | Roadmap table §2 |
 | A2 | Spin-up devnet & cloud infra | KC-Chain Orbit devnet, Railway 24×7 container |
-| A3 | Implement high-level architecture (SQLite + dual-encryption + zkProofs stub) | Architecture diagram §3 |
+| A3 | Implement high-level architecture (Cartesi encryption layer + dual-encryption + zkProofs stub) | Architecture diagram §3 |
 | A4 | Collect use-case input from stakeholders | Three validated verticals §4 |
 | A5 | Develop stress-test simulator & IoT pipeline | Integrated into `main.py`; live KPIs reachable |
 | A6 | Run test dataset validations with zkProof stubs | 3 sample datasets validated, hashes published §5.1 |
@@ -45,21 +45,21 @@ gantt
 
 ```mermaid
 flowchart TD
-    subgraph Stress–Test Container (Railway)
-        A[Simulated Payments]-->LOGS
-        B[Merchant Settlements]-->LOGS
-        C[Loan Origination]-->LOGS
+    subgraph Stress_Test_Container["Stress-Test Container (Railway)"]
+        A[Simulated Payments] --> LOGS
+        B[Merchant Settlements] --> LOGS
+        C[Loan Origination] --> LOGS
         D[IoT Device Sim]
-        D--REST-->E[lcore-node MVP]
-        E--dual encryption-->SQL[SQLite]
-        E--on-chain tx-->CHAIN{{MVPIoTProcessor}}
+        D -- REST --> E[lcore-node MVP]
+        E -- dual encryption --> CRT[Cartesi Encryption Layer]
+        E -- on-chain tx --> CHAIN{{MVPIoTProcessor}}
     end
-    SQL--proof hash-->CHAIN
-    LOGS-.->/metrics
+    CRT -- proof hash --> CHAIN
+    LOGS -.-> METRICS[/metrics]
 ```
 
 **Components:**
-1. **SQLite** – device data & encryption artefacts; read/write verified via API.
+1. **Cartesi Encryption Layer** – handles encrypted payloads & proof generation; state verified via Rollups.
 2. **FHE / zkProofs** – RiscZero stubs run over three public datasets (see §5.1); full FHE planned in Phase-4.
 3. **Stylus Contract** – address `MVP_IOT_PROCESSOR_ADDRESS` (env-driven).
 
@@ -87,7 +87,7 @@ flowchart TD
 
 *Proof artifacts generated with RiscZero guest program `zk_csv_hash`; verifier output included in `docs/proofs/`.*
 
-### 5.2  SQLite on Testnet
+### 5.2  Cartesi Rollups Input Box on Testnet
 
 Execute via `curl` (requires env vars in `.env`):
 
@@ -95,14 +95,14 @@ Execute via `curl` (requires env vars in `.env`):
 curl $LCORE_NODE_URL/device/register -d '{"device_id":"demo_001"}' -H 'Content-Type: application/json'
 ```
 
-Response `{"success":true}` proves INSERT; database is mounted in the container (`/data/lcore.db`).
+Response `{"success":true}` confirms payload enqueued to the Rollups input box and persisted by the Cartesi off-chain storage layer.
 
 ### 5.3  IoT Throughput ≥ 50 entries / day
 
 *Live KPI:*
 
 ```bash
-curl https://https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/logs?environmentId=cc6fa426-2b8f-4278-8ff3-bcc8422990f4/metrics | jq '.daily_submission_rate'
+curl https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/service/1b58bdbe-f60a-4c59-be52-4cccb2044761/metrics | jq '.daily_submission_rate'
 ```
 
 The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by ×8.6.
