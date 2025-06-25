@@ -3,7 +3,7 @@
 ---
 
 ## 1. Log Management
-* Logs are written to `logs/` inside the container (`*.csv`, `*.log`).
+* Runtime metrics available via `/metrics` endpoint with JSON KPI data.
 * In Railway, stdout is forwarded to the web UI; CSV files are ephemeral.
 * Rotate local logs with `logrotate` or run:
   ```bash

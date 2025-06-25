@@ -12,7 +12,7 @@
 
 | Layer | Threat | Mitigation |
 |-------|--------|-----------|
-| Device Auth | Fake device spamming data | Device public key whitelist (on-chain `DeviceRegistryStylus`) & JWT planned |
+| Device Auth | Fake device spamming data | Device public key whitelist (on-chain [`DeviceRegistryStylus`](https://github.com/Modern-Society-Labs/lcore-platform) from [lcore-platform](https://github.com/Modern-Society-Labs/lcore-platform) and [lcore-node](https://github.com/Modern-Society-Labs/lcore-node)) & JWT planned |
 | Transport | MITM between device ↔ node | HTTPS/TLS termination in production; devnet uses localhost only |
 | Encryption | Cipher downgrade / tamper | Dual‐stage AES-256-GCM ➜ ChaCha20-Poly1305 pipeline |
 | Data at Rest | SQLite dump leakage | Payload is already encrypted; DB path configurable; file-system access limited inside container |

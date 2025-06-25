@@ -1,5 +1,7 @@
 # Milestone 1 Report — IoT-L{CORE} Stress-Test & MVP 
 
+> **📋 STRESS TEST DOCUMENTATION**: This milestone report documents stress testing and validation of basic implementations across the IoT-L{CORE} ecosystem repositories.
+> 
 > **Repository Tag:** `milestone-1`
 > 
 > **Live Demo:** : <https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/logs?environmentId=cc6fa426-2b8f-4278-8ff3-bcc8422990f4>
@@ -11,7 +13,7 @@ KC-Chain devnet explorer: https://explorer-1205614515668104.devnet.alchemy.com/
 
 | Purpose | Address / URL |
 |---------|---------------|
-| Stylus contract `MVPIoTProcessor` | 0xd99061c28b9063d9651fea67930fc4ff598ba5b2 |
+| Stylus contract [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform) | 0xd99061c28b9063d9651fea67930fc4ff598ba5b2 |
 | Stress-test metrics endpoint | https://railway.com/project/4bb8edd6-ffdf-47d2-a0e1-44a582aa94f4/service/1b58bdbe-f60a-4c59-be52-4cccb2044761/metrics |
 
 ---
@@ -75,15 +77,15 @@ flowchart TD
 3. **Stylus Contract** – address `MVP_IOT_PROCESSOR_ADDRESS` (env-driven).
 
 **Milestone 2 Migration Plan:**
-1. **Cartesi Encryption Layer** – will handle encrypted payloads & proof generation; state verified via Rollups
-2. **Full RiscZero zkProofs** – cryptographic proof generation within Cartesi VM
-3. **Deterministic Storage** – SQLite operations moved to Cartesi machine
+1. **[Cartesi Encryption Layer](https://github.com/Modern-Society-Labs/lcore-node)** – will handle encrypted payloads & proof generation; state verified via Rollups
+2. **Full RiscZero zkProofs** – cryptographic proof generation within [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node)
+3. **Deterministic Storage** – SQLite operations moved to [Cartesi machine](https://github.com/Modern-Society-Labs/lcore-node)
 
 
 
 ---
 
-¹ *These functions will be migrated to the Cartesi Layer in Milestone 2*
+¹ *These functions will be migrated to the [Cartesi Layer](https://github.com/Modern-Society-Labs/lcore-node) in Milestone 2*
 
 ## 4  Target Use-Cases ✅
 
@@ -117,14 +119,14 @@ let proof_hash: B256 = B256::from_slice(&Sha256::digest(&encrypted_data.0));
 
 **Phase 2 Migration Plan:**
 - 🚀 Replace SHA256 checksums with RiscZero zkProofs
-- 🚀 Implement zkProof generation within Cartesi VM
+- 🚀 Implement zkProof generation within [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node)
 - 🚀 Add cryptographic proof verification on-chain
 - 🚀 Enable fraud-proof dispute resolution
 
 | Dataset | SHA-256 Checksum | Phase 2 Target |
 |---|---|---|
 | IoT device data | `✅ Implemented` | `🚀 RiscZero zkProof` |
-| Encrypted payloads | `✅ Implemented` | `🚀 Cartesi VM proof` |
+| Encrypted payloads | `✅ Implemented` | `🚀 [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node) proof` |
 | Query results | `✅ Implemented` | `🚀 Deterministic execution proof` |
 
 ### 5.2  Local SQLite Database Integration (Milestone 1)
@@ -137,7 +139,7 @@ curl $LCORE_NODE_URL/device/register -d '{"device_id":"demo_001"}' -H 'Content-T
 
 Response `{"success":true}` confirms payload processed through dual encryption and persisted in local SQLite database (`/tmp/lcore-mvp.db`).
 
-**Milestone 2 Migration**: This local storage will be migrated to Cartesi Rollups input box and off-chain storage layer.
+**Milestone 2 Migration**: This local storage will be migrated to [Cartesi Rollups](https://github.com/Modern-Society-Labs/lcore-node) input box and off-chain storage layer.
 
 ### 5.3  IoT Throughput ≥ 50 entries / day
 
@@ -177,14 +179,14 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 3. **Verify**
    * `curl localhost:8000/health` → `{"status":"ok"}`
    * `curl localhost:8000/metrics | jq` → KPI JSON
-   * Inspect `logs/` for CSV detail if running bare-metal.
+   * Monitor via `/metrics` endpoint for live KPI data.
 
 ---
 
 ## 8  Next Milestone Preview (Milestone 2) 🛣️
-* **Cartesi Layer Migration**: Migrate local SQLite storage to Cartesi rollups-node
-* **Real RiscZero zkProofs**: Replace SHA256 checksums with cryptographic proofs within Cartesi VM
-* **Deterministic Execution**: Complete Cartesi rollups-node integration with fraud proofs
+* **[Cartesi Layer Migration](https://github.com/Modern-Society-Labs/lcore-node)**: Migrate local SQLite storage to Cartesi rollups-node
+* **Real RiscZero zkProofs**: Replace SHA256 checksums with cryptographic proofs within [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node)
+* **Deterministic Execution**: Complete [Cartesi rollups-node integration](https://github.com/Modern-Society-Labs/lcore-node) with fraud proofs
 * **On-chain event indexing & Grafana dashboards**: Enhanced monitoring and analytics
 
 ---
@@ -195,7 +197,7 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 
 | Item | Evidence |
 |------|----------|
-| Wallet CSV version-controlled | [`logs/wallets.csv`](../logs/wallets.csv) (commit [`59ce6e8`](https://github.com/Modern-Society-Labs/KC-Chain-M1/commit/59ce6e8)) |
+| Wallet management system | Deterministic wallet funding and management implemented | See `utils/wallet_manager.py` and funding helpers |
 | Env-aware loader | [`utils/wallet_manager.py`](../utils/wallet_manager.py#L34-L75) resolves `WALLETS_CSV_FILE` then falls back to repo file. |
 | Static asset baked into image | [`nixpacks.toml`](../nixpacks.toml) copies the CSV into `/assets` during build. |
 | One-time funding helper | [`utils/funding_helper.py`](../utils/funding_helper.py) – `fund_all_from_funder()` and external variant. |
@@ -210,7 +212,7 @@ The JSON field is currently **`432.0`**, exceeding the 50 entries/day target by 
 | End-to-end latency | 0.10 s median | ≤ 30 s |
 | Device registrations | 15  | n/a |
 
-Contract proofs committed on-chain via `MVPIoTProcessor` contract [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer.kc-chain.io/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2).
+Contract proofs committed on-chain via [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform) contract [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer.kc-chain.io/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2).
 
 ---
 

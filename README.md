@@ -1,5 +1,7 @@
 # KC-Chain Enhanced Stress Test Simulator with IoT Data Pipeline
 
+> **📋 STRESS TEST DOCUMENTATION**: This repository contains stress testing tools to validate basic implementations and assumptions of the IoT-L{CORE} ecosystem across multiple repositories.
+
 This repository contains an enhanced load-testing framework for KC-Chain (Arbitrum Orbit) devnet that integrates real IoT data simulation through the validated lcore-node MVP architecture. It dispatches realistic, randomly-generated transactions across both traditional blockchain operations and real IoT data pipeline workflows.
 
 ## 🚀 Enhanced Features
@@ -14,7 +16,7 @@ This repository contains an enhanced load-testing framework for KC-Chain (Arbitr
    - **Device Registration**: Simulates IoT devices registering through lcore-node MVP
    - **Real Data Submission**: Uses actual CSV data samples (EV, greenhouse, sales)
    - **Dual Encryption**: AES-256-GCM + ChaCha20-Poly1305 pipeline
-   - **On-Chain Commitment**: Direct integration with deployed Stylus contract
+   - **On-Chain Commitment**: Direct integration with deployed [MVPIoTProcessor](https://github.com/Modern-Society-Labs/lcore-platform) Stylus contract
 
 ### Deployment Targets
 This project is designed to run **24/7** on [Railway](https://railway.app/) while still being effortless to clone and run locally.
@@ -48,16 +50,16 @@ This project is designed to run **24/7** on [Railway](https://railway.app/) whil
 - 🔄 **zkProofs (Simulated)**: Currently using SHA256 hashes as placeholder proof_hash¹
 
 ### **Upcoming Phase 2 - Cartesi Integration (Milestone 2):**
-- 🚀 **Full zkProof Implementation**: RiscZero proofs within Cartesi VM
-- 🚀 **Deterministic Execution**: Cartesi rollups-node integration
+- 🚀 **Full zkProof Implementation**: RiscZero proofs within [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node)
+- 🚀 **Deterministic Execution**: [Cartesi rollups-node integration](https://github.com/Modern-Society-Labs/lcore-node)
 - 🚀 **Fraud Proof System**: Complete dispute resolution mechanism
-- 🚀 **VM-Isolated Storage**: SQLite operations migrated to Cartesi machine¹
+- 🚀 **VM-Isolated Storage**: SQLite operations migrated to [Cartesi machine](https://github.com/Modern-Society-Labs/lcore-node)¹
 
 **Note**: The current MVP uses simulated proofs (SHA256 checksums) to validate the architecture. Full cryptographic zkProofs will be implemented in Phase 2 within the Cartesi deterministic execution environment.
 
 ---
 
-¹ *These functions will be migrated to the Cartesi Layer in Milestone 2*
+¹ *These functions will be migrated to the [Cartesi Layer](https://github.com/Modern-Society-Labs/lcore-node) in Milestone 2*
 
 ## 🔧 Quick Start (Local)
 
@@ -101,10 +103,10 @@ CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → D
 
 ### Future Data Flow Pipeline (Milestone 2)
 ```
-CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → Dual Encryption → Cartesi Rollups → RiscZero zkProofs → Stylus Contract
+CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → Dual Encryption → [Cartesi Rollups](https://github.com/Modern-Society-Labs/lcore-node) → RiscZero zkProofs → [Stylus Contract](https://github.com/Modern-Society-Labs/lcore-platform)
 ```
 
-¹ *Will be migrated to Cartesi Layer in Milestone 2*
+¹ *Will be migrated to [Cartesi Layer](https://github.com/Modern-Society-Labs/lcore-node) in Milestone 2*
 
 ### Performance Targets
 - **Volume**: 500 IoT entries per day simulation
@@ -170,9 +172,9 @@ If lcore-node is not available, the simulator gracefully degrades to traditional
 ## 📊 Monitoring & Metrics
 
 ### Enhanced Logging
-- `logs/tx_metrics.csv` - Traditional blockchain transaction metrics
-- `logs/iot_metrics.csv` - **NEW: IoT pipeline-specific metrics**
-- `logs/device_stats.csv` - **NEW: Device fleet statistics**
+- Runtime metrics logging for transaction and IoT pipeline monitoring
+- Device fleet statistics tracking
+- Performance metrics collection
 
 ### Real-Time Monitoring
 The simulator provides real-time performance metrics:
@@ -220,5 +222,5 @@ KC-Chain devnet explorer: <https://explorer-1205614515668104.devnet.alchemy.com/
 
 | Purpose | Address / URL |
 |---------|---------------|
-| Stylus contract `MVPIoTProcessor` | [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer-1205614515668104.devnet.alchemy.com/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2) |
+| Stylus contract [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform) | [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer-1205614515668104.devnet.alchemy.com/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2) |
 | Stress-test metrics endpoint | `https://<your-railway-url>/metrics` |

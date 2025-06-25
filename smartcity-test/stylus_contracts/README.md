@@ -1,12 +1,14 @@
 # IoT-L{CORE} Platform
 
+> **📋 STRESS TEST DOCUMENTATION**: This contains stress testing contracts for validating basic implementations. Full contract implementations are in [lcore-platform](https://github.com/Modern-Society-Labs/lcore-platform).
+
 This repository contains the smart contracts and deployment scripts for the IoT-L{CORE} platform, which integrates with our KC-Chain Arbitrum Orbit devnet.
 
 ## MVP Contracts
 
 ### `MVPIoTProcessor`
 
-The primary contract for the MVP is `MVPIoTProcessor`, a simple yet effective on-chain commitment ledger. It is written in Rust and compiled to WASM for use with Arbitrum Stylus.
+The primary contract for the MVP is [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform), a simple yet effective on-chain commitment ledger. It is written in Rust and compiled to WASM for use with Arbitrum Stylus.
 
 **Location**: `stylus_contracts/src/lib.rs`
 
@@ -18,9 +20,11 @@ This contract serves as the immutable "bulletin board" for data processed by the
 
 ### `DeviceRegistryStylus` (NEW)
 
-`DeviceRegistryStylus` is a lightweight Stylus contract that maintains a mapping of `deviceId → bool` indicating whether a device is authorised.  It replaces the temporary SQLite `devices` table used during early MVP testing and allows anyone to query on-chain whether a device is registered.  Only the contract owner can add or revoke devices, and multiple devices can be added over time without redeploying the contract.
+[`DeviceRegistryStylus`](https://github.com/Modern-Society-Labs/lcore-platform) is a lightweight Stylus contract that maintains a mapping of `deviceId → bool` indicating whether a device is authorised.  It replaces the temporary SQLite `devices` table used during early MVP testing and allows anyone to query on-chain whether a device is registered.  Only the contract owner can add or revoke devices, and multiple devices can be added over time without redeploying the contract.
 
-Location: `contracts/stylus/DeviceRegistryStylus.rs`
+**Note**: This contract is implemented in the [lcore-platform repository](https://github.com/Modern-Society-Labs/lcore-platform) and integrated with the [lcore-node application](https://github.com/Modern-Society-Labs/lcore-node).
+
+Location: [`contracts/stylus/DeviceRegistryStylus.rs`](https://github.com/Modern-Society-Labs/lcore-platform)
 
 Key functions:
 * `register_device(bytes32 deviceId)` – owner-only

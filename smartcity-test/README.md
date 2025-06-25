@@ -1,6 +1,6 @@
 ## Overview
 
-This MVP memory bank documents the **first implementation step** in our path to the full Cartesi integration architecture. The MVP has been successfully built, tested, and validated, proving the core dual-encryption and on-chain commitment pipeline.
+This MVP memory bank documents the **first implementation step** in our path to the full [Cartesi integration architecture](https://github.com/Modern-Society-Labs/lcore-node). The MVP has been successfully built, tested, and validated, proving the core dual-encryption and on-chain commitment pipeline.
 
 ## 🎯 Implementation Strategy: Phase 1 Complete
 
@@ -8,15 +8,15 @@ This MVP memory bank documents the **first implementation step** in our path to 
 - **Standalone Dual Encryption**: The `encryption` crate successfully implements a two-stage AES-256-GCM and ChaCha20-Poly1305 pipeline.
 - **Local SQLite Storage**: The `storage` crate provides a working SQLite backend for local, encrypted data persistence (`/tmp/lcore-mvp.db`)¹.
 - **REST APIs**: The `api` crate exposes `/device/register` and `/device/data` endpoints using the Axum framework.
-- **KC-Chain Integration**: The `kc_chain` crate successfully submits transactions to the `MVPIoTProcessor` Stylus contract on the live KC-Chain devnet.
+- **KC-Chain Integration**: The `kc_chain` crate successfully submits transactions to the [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform) Stylus contract on the live KC-Chain devnet.
 
 ### **Phase 2: Cartesi Migration (Milestone 2 - Next)**
 With the MVP validated, the project is now ready to proceed with migration to the full Cartesi rollups-node architecture, including:
-- **Cartesi VM Integration**: Migrate SQLite operations to deterministic Cartesi environment¹
+- **[Cartesi VM Integration](https://github.com/Modern-Society-Labs/lcore-node)**: Migrate SQLite operations to deterministic Cartesi environment¹
 - **RiscZero zkProofs**: Replace SHA256 simulation with cryptographic proof generation¹  
 - **Fraud Proof System**: Complete dispute resolution mechanism
 
-¹ *These functions will be migrated to the Cartesi Layer in Milestone 2*
+¹ *These functions will be migrated to the [Cartesi Layer](https://github.com/Modern-Society-Labs/lcore-node) in Milestone 2*
 
 ## ✅ MVP Architecture Components
 
@@ -56,7 +56,7 @@ graph TD
 1.  A `curl` command simulates an IoT device, POSTing data to the `lcore-node-mvp` REST API.
 2.  The `DualEncryptionService` performs the two-stage encryption.
 3.  The final encrypted payload is stored in the local SQLite database.
-4.  A commitment is sent to the `MVPIoTProcessor` Stylus contract on KC-Chain. The transaction was successful after implementing a fixed gas limit to handle the calldata size.
+4.  A commitment is sent to the [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform) Stylus contract on KC-Chain. The transaction was successful after implementing a fixed gas limit to handle the calldata size.
 
 ## 🚀 Key Benefits of MVP Completion
 

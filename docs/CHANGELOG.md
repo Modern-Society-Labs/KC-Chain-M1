@@ -7,7 +7,7 @@ All notable changes to this project will be documented here following [Keep a Ch
 * `utils.wallet_manager` now respects the `WALLETS_CSV_FILE` environment variable so a fixed wallet set can be provided in container images (e.g. `/assets/wallets.csv` on Railway).
 
 ### Changed
-* When no explicit path or environment variable is provided WalletManager still falls back to `logs/wallets.csv`.
+* WalletManager uses environment variables with deterministic fallback behavior.
 
 ### Fixed
 * Avoided permission errors by not attempting to create parent directories for absolute wallet paths (e.g. `/assets`).

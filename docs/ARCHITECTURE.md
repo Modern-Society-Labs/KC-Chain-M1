@@ -1,5 +1,7 @@
 # System Architecture (Living Document)
 
+> **📋 STRESS TEST DOCUMENTATION**: This architecture documents the stress testing setup across multiple IoT-L{CORE} repositories.
+
 This file is updated as components evolve.  For the snapshot of Milestone-1, see `docs/milestone-report.md`.
 
 ---
@@ -24,7 +26,7 @@ flowchart LR
         API --> KC[KC-Chain Client]
     end
 
-    KC -->|Stylus tx| CHAIN[(MVPIoTProcessor)]
+    KC -->|Stylus tx| CHAIN[([MVPIoTProcessor](https://github.com/Modern-Society-Labs/lcore-platform))]
 ```
 
 ## Future Architecture (Milestone 2 - Cartesi Integration)
@@ -39,14 +41,14 @@ flowchart LR
 
     subgraph Rust Container (lcore-node)
         API[Axum API] --> ENC(Dual Encryption)
-        ENC --> CRT[Cartesi Encryption Layer]¹
+        ENC --> CRT[[Cartesi Encryption Layer](https://github.com/Modern-Society-Labs/lcore-node)]¹
         API --> KC[KC-Chain Client]
     end
 
-    KC -->|Stylus tx| CHAIN[(MVPIoTProcessor)]
+    KC -->|Stylus tx| CHAIN[([MVPIoTProcessor](https://github.com/Modern-Society-Labs/lcore-platform))]
 ```
 
-¹ *Will be migrated to Cartesi Layer in Milestone 2*
+¹ *Will be migrated to [Cartesi Layer](https://github.com/Modern-Society-Labs/lcore-node) in Milestone 2*
 
 ---
 
@@ -71,7 +73,7 @@ flowchart LR
 ## Future Data Flow (Milestone 2 - Cartesi)
 1. `device_simulator` synthesises sensor JSON.
 2. `lcore_client` POSTs to `lcore-node` (`/device/data`).
-3. Rust node encrypts ➜ forwards payload to Cartesi Rollups ➜ generates RiscZero proofs ➜ submits Stylus tx.
+3. Rust node encrypts ➜ forwards payload to [Cartesi Rollups](https://github.com/Modern-Society-Labs/lcore-node) ➜ generates RiscZero proofs ➜ submits Stylus tx.
 4. Python updates KPI counters and writes CSV logs.
 
 ---
@@ -97,15 +99,15 @@ flowchart LR
 ### Future Rust Crates - Milestone 2
 | Crate | Purpose |
 |-------|---------|
-| `rollups_storage` | Cartesi Rollups off-chain data persistence |
-| `cartesi_rollups` | Off-chain input box integration |
-| `risc_zero` | zkProof generation within Cartesi VM |
+| `rollups_storage` | [Cartesi Rollups](https://github.com/Modern-Society-Labs/lcore-node) off-chain data persistence |
+| `cartesi_rollups` | [Off-chain input box integration](https://github.com/Modern-Society-Labs/lcore-node) |
+| `risc_zero` | zkProof generation within [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node) |
 
 ---
 
 ## Migration Roadmap to Milestone 2
-* Replace local SQLite with Cartesi Rollups input box
-* Move encryption + proof generation into RiscZero guest inside Cartesi VM  
+* Replace local SQLite with [Cartesi Rollups](https://github.com/Modern-Society-Labs/lcore-node) input box
+* Move encryption + proof generation into RiscZero guest inside [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node)  
 * Split payment / merchant / lending apps into separate containers for micro-benchmarking
 * Implement fraud-proof dispute resolution system
 
