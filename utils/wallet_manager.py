@@ -134,12 +134,22 @@ class WalletManager:
                     )
                     self._add_wallet_to_collections(wallet)
             else:
-                print("No existing wallets found. Creating new wallet set...")
-                self._create_default_wallet_set()
+                # Prevent silent wallet regeneration because it changes the
+                # funder key every time the container starts and causes the
+                # Rust lcore-node to fail with an invalid signer. Instead,
+                # instruct the operator to mount / persist the original
+                # `wallets.csv` created during the first run.
+                raise RuntimeError(
+                    "wallets.csv exists but contains no wallets – refusing to "
+                    "auto-generate a new set. Please provide a persistent "
+                    "wallets.csv or restore it from backup to keep keys "
+                    "stable across deployments."
+                )
                 
         except Exception as e:
-            print(f"Error loading wallets: {e}. Creating new wallet set...")
-            self._create_default_wallet_set()
+            # Do **not** auto-regenerate on error – bubble up so deployment
+            # fails fast and visibly.
+            raise
     
     def _create_default_wallet_set(self):
         """Create a default set of wallets for different transaction types"""
