@@ -39,13 +39,37 @@ class ManagedWallet:
 class WalletManager:
     """Manages multiple wallets for different transaction types"""
     
-    def __init__(self, wallets_csv_file: str = "logs/wallets.csv"):
+    def __init__(self, wallets_csv_file: Optional[str] = None):
+        """Create a WalletManager.
+
+        Parameters
+        ----------
+        wallets_csv_file : str | None, optional
+            Explicit path to the wallets CSV file. If *None* (the default), the
+            manager will look for an environment variable ``WALLETS_CSV_FILE``.
+            When the variable is not set, it falls back to ``"logs/wallets.csv"``.
+        """
+
+        # Resolve the location of the wallets data file. This makes it possible
+        # to pin the wallet set in immutable images (e.g. Railway /assets mount)
+        # simply by exporting the environment variable, without having to change
+        # any code.
+        if wallets_csv_file is None:
+            wallets_csv_file = os.getenv("WALLETS_CSV_FILE", "logs/wallets.csv")
+
         self.wallets_csv_file = Path(wallets_csv_file)
+        
         self.wallets: Dict[str, ManagedWallet] = {}
         self.wallets_by_type: Dict[WalletType, List[ManagedWallet]] = {}
         
-        # Ensure logs directory exists
-        self.wallets_csv_file.parent.mkdir(parents=True, exist_ok=True)
+        # Ensure parent directory exists when using a *relative* path such as
+        # the default "logs/wallets.csv". When an absolute path is supplied
+        # (e.g. "/assets/wallets.csv" inside a container), the directory is
+        # expected to exist already and we skip creation to avoid permission
+        # issues.
+        if not self.wallets_csv_file.is_absolute() or self.wallets_csv_file.parent.exists():
+            # ``exist_ok=True`` prevents errors if the directory is already there.
+            self.wallets_csv_file.parent.mkdir(parents=True, exist_ok=True)
         
         # Initialize CSV file
         self._init_csv()
