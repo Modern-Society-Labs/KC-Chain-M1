@@ -1,0 +1,3 @@
+[start]
+cmd = "/app/bin/lcore-node-mvp --config=/app/config.toml"
+onlyIncludeFiles = ["./bin/lcore-node-mvp", "./config.toml"] 
