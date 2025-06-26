@@ -18,7 +18,7 @@ query_cache_ttl_minutes = 5
 rpc_url = "https://rpc.devnet.alchemy.com/YOUR_API_KEY_HERE"
 ws_url = "https://ws.devnet.alchemy.com/YOUR_API_KEY_HERE"  
 chain_id = 1205614515668104
-private_key = "0x0000000000000000000000000000000000000000000000000000000000000000"
+private_key = "0x1f8de033f3d2d079cf173949e424fcb11f7b5d96dafce76212580b9dfac877db"
 
 [kc_chain.contracts]
 mvp_processor = "0xd99061c28b9063d9651fea67930fc4ff598ba5b2"
