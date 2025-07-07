@@ -102,8 +102,39 @@ CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → D
 ```
 
 ### Future Data Flow Pipeline (Milestone 2)
-```
-CSV Data Samples → Data Parsers → Device Simulators → lcore-node API → Dual Encryption → [Cartesi Rollups](https://github.com/Modern-Society-Labs/lcore-node) → RiscZero zkProofs → [Stylus Contract](https://github.com/Modern-Society-Labs/lcore-platform)
+### **Enhanced Architecture Overview**
+
+```mermaid
+sequenceDiagram
+    participant Device as IoT Device<br/>(lcore-device-sdk)
+    participant Gateway as Cartesi Gateway<br/>(lcore-platform)
+    participant Node as lcore-node<br/>(Privacy Computing)
+    participant CartesiVM as Cartesi VM<br/>(rollups-node)
+    participant GraphQL as GraphQL API<br/>(VM Query Interface)
+    participant SQLite as VM SQLite<br/>(Isolated Database)
+    participant Contract as Enhanced Contract<br/>(KC-Chain)
+    participant DApp as Enhanced dApp<br/>(Fraud-Proof Guaranteed)
+    
+    Note over Device,SQLite: Stage 1 - Deterministic Data Ingestion
+    Device->>Gateway: IoT Data + DID Signature
+    Gateway->>Gateway: Validate DID + JOSE
+    Gateway->>Node: Forward Validated Data
+    Node->>CartesiVM: Submit HTTP Input
+    CartesiVM->>CartesiVM: Deterministic Stage 1 Encrypt + Proof
+    CartesiVM->>SQLite: Store Encrypted Data + Proof
+    
+    Note over Contract,DApp: Stage 2 - Fraud-Proof Verified Query Processing
+    Contract->>Node: Query Request (KC-Chain)
+    Node->>GraphQL: Query VM State
+    GraphQL->>CartesiVM: Fetch Notices/Reports
+    CartesiVM->>SQLite: Query Encrypted Data
+    CartesiVM->>CartesiVM: Deterministic Stage 2 Encrypt + Proof
+    CartesiVM->>Node: Return Fraud-Proof + Result
+    Node->>Contract: Submit with Cartesi Verification
+    Contract->>DApp: Fraud-Proof Verified Data
+    DApp->>DApp: Provide Guaranteed IoT Intelligence
+    
+    Note over Device,DApp: Zero Raw Data + Fraud-Proof Guarantees
 ```
 
 ¹ *Will be migrated to [Cartesi Layer](https://github.com/Modern-Society-Labs/lcore-node) in Milestone 2*
