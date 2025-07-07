@@ -4,6 +4,16 @@
 
 This repository contains an enhanced load-testing framework for KC-Chain (Arbitrum Orbit) devnet that integrates real IoT data simulation through the validated lcore-node MVP architecture. It dispatches realistic, randomly-generated transactions across both traditional blockchain operations and real IoT data pipeline workflows.
 
+---
+
+## Adjustments to the Original Proposal
+
+We dropped the fully-homomorphic-encryption track because ciphertexts and evaluation keys were 50-100× larger than our dual-encryption payloads and each FHE evaluation would have pushed the Cartesi VM beyond its block-time budget, inflating gas costs; the AES-256-GCM + XChaCha20-Poly1305 pipeline paired with lightweight zk-proofs gives the same privacy and verifiability guarantees while fitting within snapshot size and fee constraints.
+
+Architecturally, the project is now anchored on a KC-Chain Orbit chain (L2) that serves as the shared execution layer; each smart-city zone spins up its own L3 “city-chain” rollup running the multi-dApp Cartesi stack, and all of those L3s settle and inherit security from the Orbit L2 while sharing the same Stylus contract framework and dispute-resolution system.
+
+---
+
 ## 🚀 Enhanced Features
 
 ### Traditional Blockchain Stress Testing
@@ -50,10 +60,23 @@ This project is designed to run **24/7** on [Railway](https://railway.app/) whil
 - 🔄 **zkProofs (Simulated)**: Currently using SHA256 hashes as placeholder proof_hash¹
 
 ### **Upcoming Phase 2 - Cartesi Integration (Milestone 2):**
-- 🚀 **Full zkProof Implementation**: RiscZero proofs within [Cartesi VM](https://github.com/Modern-Society-Labs/lcore-node)
-- 🚀 **Deterministic Execution**: [Cartesi rollups-node integration](https://github.com/Modern-Society-Labs/lcore-node)
-- 🚀 **Fraud Proof System**: Complete dispute resolution mechanism
-- 🚀 **VM-Isolated Storage**: SQLite operations migrated to [Cartesi machine](https://github.com/Modern-Society-Labs/lcore-node)¹
+✅ Deterministic execution: rollups-node snapshot built & runs RISC-V code
+✅ Fraud-proof skeleton: Verifier Stylus contract with submitCartesiResult(bytes) deployed
+✅ VM-isolated SQLite (/data/iot.db) included in snapshot
+🔄 Real zk-proofs inside Cartesi VM (RiscZero)
+🔄 Generate genuine RiscZero proofs & pipe them into the Verifiernode)¹
+
+### **Upcoming Phase 3 - Beta Hardening (Milestone 3):**
+⏳ End-to-end proof verification on-chain (happy path)
+⏳ 24 h epoch snapshots + basic challenge window
+⏳ Load-test ≈ 1 k tx/day, monitoring dashboards
+⏳ Security review of Stylus byte-code & circuits
+
+Phase 4 – Pilot Deployment (internal dev; groundwork started)
+⏳ Single-city pilot (target 10 k devices, 5 k tx/day)
+⏳ Manual dispute-path test on KC-Chain dev-net
+⏳ Snapshot publishing to IPFS mirror
+⏳ Fee governor contr
 
 **Note**: The current MVP uses simulated proofs (SHA256 checksums) to validate the architecture. Full cryptographic zkProofs will be implemented in Phase 2 within the Cartesi deterministic execution environment.
 
@@ -255,3 +278,22 @@ KC-Chain devnet explorer: <https://explorer-1205614515668104.devnet.alchemy.com/
 |---------|---------------|
 | Stylus contract [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform) | [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer-1205614515668104.devnet.alchemy.com/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2) |
 | Stress-test metrics endpoint | `https://<your-railway-url>/metrics` |
+
+-----
+
+## Local Traction Updates:
+
+- We’ve made key progress building local and institutional support:
+- $400K Committed by the State of Missouri for a project aligned with our deal-flow.
+- Extension on $800K Previously Committed, pending matching capital.
+- Simplified Legal/Regulatory Path, including early talks on a state-level sandbox.
+- SBA-Lending-as-a-Service & Econ Dev Partners lined up to support off-chain compliance and reporting for the testnet.
+- Soft Commitment from the Missouri Restaurant Association to support payment/merchant dApps for early data collection (potentially our first local Civic DAO)
+- Two New Cities Identified with local teams to lead their own City-Chains.
+- Rebranded Docs and Messaging to align with the City-Chain model.
+
+Remaining Web3 Needs
+
+- Marketing Support from OCL or the Arbitrum Foundation solely within Web3.
+- Web3 Lending Protocol Partner or decision to bootstrap in-house.
+
