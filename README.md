@@ -277,7 +277,7 @@ KC-Chain devnet explorer: <https://explorer-1205614515668104.devnet.alchemy.com/
 | Purpose | Address / URL |
 |---------|---------------|
 | Stylus contract [`MVPIoTProcessor`](https://github.com/Modern-Society-Labs/lcore-platform) | [`0xd99061c28b9063d9651fea67930fc4ff598ba5b2`](https://explorer-1205614515668104.devnet.alchemy.com/address/0xd99061c28b9063d9651fea67930fc4ff598ba5b2) |
-| Stress-test metrics endpoint | `(https://railway.com/invite/J9Lrm2ntUAM)` |
+| Stress-test metrics endpoint | `https://railway.com/invite/J9Lrm2ntUAM` |
 
 -----
 
